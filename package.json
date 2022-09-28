@@ -1,5 +1,5 @@
 {
-  "name": "visaapp",
+  "name": "aird2_build",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -19,7 +19,7 @@
     "web-vitals": "^2.1.2"
   },
   "devDependencies": {
-    "eslint": "8.23.1",
+    "eslint": "8.24.0",
     "eslint-config-next": "12.3.1"
   }
 }

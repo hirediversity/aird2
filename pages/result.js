@@ -126,26 +126,26 @@ const Content = ({props}) => {
                     You can pay it through the button below!</p>
                     <p id="subtitle">Payment due : <b>2022. 10. 03</b></p>
 
-                    <a href={data.관리비링크} target="_blank">
+                    <a href={data.관리비링크} target="_blank" rel="noreferrer">
                     <button type="button" className="btn btn-primary btn-sm" id="searchBtn">Click here to pay the utilty 💸</button></a>
                     <p>&nbsp;</p>
                     <p id="title3">🙆‍♀️ How to check the breakdown</p>
                     <p id="subtitle">You can check it both on the paper bill and the APP, regardless of the rent fee (임대료)<br/>
-                    If you want to check through the APP, click the top right button and find 'Maintenace Fee'</p>
+                    {`If you want to check through the APP, click the top right button and find 'Maintenace Fee'`}</p>
 
                     <details>
                     <summary id="subtitle">Details for the bill on the APP</summary>
-                    <p id="subtitle3">This bill is normally issued a month later, so you can find a bill for August on the tap named "2022year 09month"</p>
+                    <p id="subtitle3">{`This bill is normally issued a month later, so you can find a bill for August on the tap named "2022year 09month"`}</p>
                     <p id="subtitle3">&nbsp;ㆍ This image is for a reference<br/>
-                    &nbsp;ㆍ If you click the purple button named 'Check the deposit account' and pay to that account, it will be hard to be confirmed faster<br/>
+                    &nbsp;ㆍ {`If you click the purple button named 'Check the deposit account' and pay to that account, it will be hard to be confirmed faster`}<br/>
                     &nbsp;ㆍ Just use that page as checking for the breakdown, Click the button above on this page to the payment</p>
                     <p></p>
                     <img id="screenshot" src="https://github.com/hirediversity/app/blob/main/Resized_Screenshot_20220926-170716.jpg?raw=true"></img>
                     </details>
                     <p></p>
-                    <p id="subtitle">If you don't have an access of your APP account, please click the button below!</p>
+                    <p id="subtitle">{`If you don't have an access of your APP account, please click the button below!`}</p>
 
-                    <a href='https://form.jotform.com/221941752449057' target="_blank">
+                    <a href='https://form.jotform.com/221941752449057' target="_blank" rel="noreferrer">
                     <button type="button" className="btn btn-primary btn-sm" id="searchBtn">Submit information to make the APP account</button></a>
                 </>
                 )
