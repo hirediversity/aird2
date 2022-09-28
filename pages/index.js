@@ -62,6 +62,7 @@ function Body() {
             >
               <button type="button" className="btn btn-primary btn-sm" id="searchBtn">Login</button>
           </Link>
+          <p id='subtitle'>please wait a second after pressing Login button once!</p>
           </div>
         </div>
 
