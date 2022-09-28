@@ -68,20 +68,16 @@ function Body(props) {
         return (
           <div className="App">
             <div id="wrapper">
-            <a href="https://aird.kr"><img id="hirelogo" src='/aird1@300x-8 - 복사본.png'/></a></div>
+            <a href="https://www.jotform.com/app/221943338469465"><img id="hirelogo" src='/aird1@300x-8 - 복사본.png'/></a></div>
             <p id="title">Utility Fee</p>
             <p id='subtitle2'>Check your maintenance fee charged for the usage of last <b>August</b>.</p><br/>
 
             <div>
                 <Content props={props}/>
             </div>
-            <Link
-              href={{
-                pathname: "/"
-              }}
-              >
+            <a href="https://www.jotform.com/app/221943338469465">
                 <button type="button" className="btn btn-primary btn-sm" id="searchBtn2">Back to Main</button>
-            </Link>
+            </a>
           </div>
         )
     } else {
