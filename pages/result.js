@@ -124,7 +124,7 @@ const Content = ({props}) => {
                     <p id="title3">🙋‍♀️ Total amount for August</p>
                     <p id="subtitle">The amount you have to pay is <b>{data.관리비안내용}KRW</b>,<br/>
                     You can pay it through the button below!</p>
-                    <p id="subtitle">Payment due : <b>2022. 10. 03</b></p>
+                    <p id="subtitle">Payment due : <b>2022. 10. 05</b></p>
 
                     <a href={data.관리비링크} target="_blank" rel="noreferrer">
                     <button type="button" className="btn btn-primary btn-sm" id="searchBtn">Click here to pay the utilty 💸</button></a>
