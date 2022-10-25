@@ -47,7 +47,7 @@ function Body() {
         <div id="wrapper">
             <a href="https://www.jotform.com/app/221943338469465"><img id="hirelogo" src='/aird1@300x-8 - 복사본.png'/></a></div>
             <p id="title">Utility Fee</p>
-            <p id='subtitle'>Check your maintenance fee charged for the usage of last <b>August</b>.</p><br/>
+            <p id='subtitle'>Check your maintenance fee that <b>used in September</b>.</p><br/>
             <p id='subtitle'>The amount might be different from the paper bill or APP,<br/>
             ignore that bill because it includes rent fee and the usage of whole month regardless your exact contract.</p>
             
