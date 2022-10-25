@@ -177,7 +177,7 @@ const Content = ({props}) => {
 
                     {/* 11월 월세 */}
                     {
-                        checkinD < fornov && checkoutD > fornov
+                        checkinD < fornov && checkoutD > fornov && Number(checkout[1]) !== 11
                         ? data.상태.toString().indexOf("22-11") !== -1 || data.상태.toString().indexOf("완납") !== -1
                         ? (<div className="card">
                             <div className="card-body" id="card">
