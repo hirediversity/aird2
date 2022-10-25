@@ -3,6 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 
+
 export async function getServerSideProps(props) {
   var rec_id = props.query.rec_id
 
@@ -21,6 +22,7 @@ export async function getServerSideProps(props) {
     });
 
     const data = await res.json();
+    
 
     // data 없을 땐 리턴값을 달리함
      if (!data) {
@@ -58,31 +60,36 @@ function Header() {
 }
 
 function Body(props) {
+    const alert = console.log.bind(console);
     if (props.status == -1) {
         alert('Please check the code once again :)')
-        window.location.assign('/');
+        // window.location.assign('/');
     } else if (props.status == -2) {
         alert('Please input the code :)')
-        window.location.assign('/');
+        // window.location.assign('/');
     } else if (props.status == 200) {
         return (
           <div className="App">
             <div id="wrapper">
             <a href="https://www.jotform.com/app/221943338469465"><img id="hirelogo" src='/aird1@300x-8 - 복사본.png'/></a></div>
-            <p id="title">Utility Fee</p>
-            <p id='subtitle2'>Check your maintenance fee charged for the usage of last <b>August</b>.</p><br/>
+            
+
 
             <div>
                 <Content props={props}/>
             </div>
+
+            
             <a href="https://www.jotform.com/app/221943338469465">
                 <button type="button" className="btn btn-primary btn-sm" id="searchBtn2">Back to Main</button>
             </a>
+
+            
           </div>
         )
     } else {
         alert('Please check the code once again :)')
-        window.location.assign('/');
+        // window.location.assign('/');
     }
 }
 
@@ -94,6 +101,7 @@ export default function HomePage({ status, data }) {
       <div>
       </div>
       <Body status={status} data={data} />
+      
     </div>
   )
 }
@@ -109,40 +117,132 @@ const Content = ({props}) => {
     let [payment, setPayment] = useState(false);
     let [date, setDate] = useState(false);
 
+
     function Normal() {
+
+        var checkin = data.체크인.split("-");
+        var fstmonth = Number(checkin[1]) + 1;
+        var checkinD = new Date(checkin[0], checkin[1], checkin[2]);
+        var checkout = data.체크아웃.split("-");
+        var checkoutD = new Date(checkout[0], checkout[1], checkout[2]);
+        var interval = checkoutD - checkinD;
+        var day = 1000*60*60*24;
+        var month = day*30;
+        var months = parseInt(interval/month);
+        var fornov = new Date("2022-12-01");
+        var foroct = new Date("2022-11-01");
+        var forsep = new Date("2022-10-01");
+
+
 
             return (
                 <>
-                    <p id="title2">Hello, {data.이름}!</p>
-                    <p id="subtitle">From the contents below, you can check <b>how much you have to pay</b> as utility this month,<br/>
-                    how to <b>find the breakdown</b> for the amount, and how to pay 😊</p>
+                <p id="title2">Hello, {data.이름}!</p>
+                <p id="subtitle2">From the contents below, you can check the status of your <b>monthly rent and utility</b>.</p>
+                <p id="subtitle2">&nbsp;</p>
+                <p id="title">Utility Fee</p>
+                <p id='subtitle2'>Check your maintenance fee that <b>used in September</b>.</p>
 
-                    <p id="title3">🙋‍♀️ Total amount for August</p>
-                    <p id="subtitle">The amount you have to pay is <b>{data.관리비안내용}KRW</b>,<br/>
-                    You can pay it through the button below!</p>
-                    <p id="subtitle">Payment due : <b>2022. 10. 05</b></p>
 
-                    <a href={data.관리비링크} target="_blank" rel="noreferrer">
-                    <button type="button" className="btn btn-primary btn-sm" id="searchBtn">Click here to pay the utilty 💸</button></a>
-                    <p>&nbsp;</p>
-                    <p id="title3">🙆‍♀️ How to check the breakdown</p>
-                    <p id="subtitle">You can check it both on the paper bill and the APP, regardless of the rent fee (임대료)<br/>
-                    {`If you want to check through the APP, click the top right button and find 'Maintenace Fee'`}</p>
+                <p id="title3">🙋‍♀️ Total amount for September</p>
+                <p id="subtitle">The amount you have to pay is <b>{data.관리비안내용}KRW</b>,<br/>
+                You can pay it through the button below!</p>
+                <p id="subtitle">Payment due : <b>2022. 11. 01</b></p>
 
-                    <details>
-                    <summary id="subtitle">Details for the bill on the APP</summary>
-                    <p id="subtitle3">{`This bill is normally issued a month later, so you can find a bill for August on the tap named "2022year 09month"`}</p>
-                    <p id="subtitle3">&nbsp;ㆍ This image is for a reference<br/>
-                    &nbsp;ㆍ {`If you click the purple button named 'Check the deposit account' and pay to that account, it will be hard to be confirmed faster`}<br/>
-                    &nbsp;ㆍ Just use that page as checking for the breakdown, Click the button above on this page to the payment</p>
-                    <p></p>
-                    <img id="screenshot" src="https://github.com/hirediversity/app/blob/main/Resized_Screenshot_20220926-170716.jpg?raw=true"></img>
-                    </details>
-                    <p></p>
-                    <p id="subtitle">{`If you don't have an access of your APP account, please click the button below!`}</p>
+                <a href={data.관리비링크} target="_blank" rel="noreferrer">
+                <button type="button" className="btn btn-primary btn-sm" id="searchBtn">Click here to pay the utilty 💸</button></a>
+                <p>&nbsp;</p>
+                <p id="title3">🙆‍♀️ How to check the breakdown</p>
+                <p id="subtitle">You can check it both on the paper bill and the APP, regardless of the rent fee (임대료)<br/>
+                {`If you want to check through the APP, click the top right button and find 'Maintenace Fee'`}</p>
 
-                    <a href='https://form.jotform.com/221941752449057' target="_blank" rel="noreferrer">
-                    <button type="button" className="btn btn-primary btn-sm" id="searchBtn">Submit information to make the APP account</button></a>
+                <details>
+                <summary id="subtitle">Details for the bill on the APP</summary>
+                <p id="subtitle3">{`This bill is normally issued a month later, so you can find a bill for August on the tap named "2022year 09month"`}</p>
+                <p id="subtitle3">&nbsp;ㆍ This image is for a reference<br/>
+                &nbsp;ㆍ {`If you click the purple button named 'Check the deposit account' and pay to that account, it will be hard to be confirmed faster`}<br/>
+                &nbsp;ㆍ Just use that page as checking for the breakdown, Click the button above on this page to the payment</p>
+                <p></p>
+                <img id="screenshot" src="https://github.com/hirediversity/app/blob/main/Resized_Screenshot_20220926-170716.jpg?raw=true"></img>
+                </details>
+                <p></p>
+                <p id="subtitle">{`If you don't have an access of your APP account, please click the button below!`}</p>
+
+                <a href='https://form.jotform.com/221941752449057' target="_blank" rel="noreferrer">
+                <button type="button" className="btn btn-primary btn-sm" id="searchBtn">Submit information to make the APP account</button></a>
+                <p id="subtitle3">&nbsp;</p>
+                <p id="subtitle2">&nbsp;</p>
+                <p id="title">Monthly Rent</p>
+                <p id="subtitle2">The last three months are displayed below,<br/>each status will be changed within a week after pay!</p>
+
+                    {/* 11월 월세 */}
+                    {
+                        checkinD < fornov && checkoutD > fornov
+                        ? data.상태.toString().indexOf("22-11") !== -1 || data.상태.toString().indexOf("완납") !== -1
+                        ? (<div className="card">
+                            <div className="card-body" id="card">
+                                <img src="checked.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-11</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkin[0]}. 12. {Number(checkin[2])-1}.</p>
+                            </div>
+                            </div>)
+                        : (<a href={data.월세납부링크} target="_blank" rel="noreferrer" id="cardlink"><div className="card">
+                            <div className="card-body" id="card">
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-11<p id="paytext">👈 Click to pay</p></p>
+                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkin[0]}. 12. {Number(checkin[2])-1}.</p>
+                            </div>
+                            </div></a>)
+                        : null
+                    }
+
+                    {/* 10월 월세 */}
+                    {
+                        checkinD < foroct && checkoutD > foroct
+                        ? data.상태.toString().indexOf("22-10") !== -1 || data.상태.toString().indexOf("완납") !== -1
+                        ? (<div className="card">
+                            <div className="card-body" id="card">
+                                <img src="checked.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-10</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 10. {Number(checkin[2])}. to {checkin[0]}. 11. {Number(checkin[2])-1}.</p>
+                            </div>
+                            </div>)
+                        : (<a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세) + "&totalusd=" + Math.ceil(Number(data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink"><div className="card">
+                            <div className="card-body" id="card">
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-10<p id="paytext">👈 Click to pay</p></p>
+                                <p id="subtitle">Covers from {checkin[0]}. 10. {Number(checkin[2])}. to {checkin[0]}. 11. {Number(checkin[2])-1}.</p>
+                            </div>
+                            </div></a>)
+                        : null
+                    }
+               
+                    {/* 9월 월세 */}
+                    {
+                        checkinD < forsep && checkoutD > forsep
+                        ? data.상태.toString().indexOf("22-9") !== -1 || data.상태.toString().indexOf("완납") !== -1
+                        ? (<div className="card">
+                            <div className="card-body" id="card">
+                                <img src="checked.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-9</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 9. {Number(checkin[2])}. to {checkin[0]}. 10. {Number(checkin[2])-1}.</p>
+                            </div>
+                            </div>)
+                        : (<a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세) + "&totalusd=" + Math.ceil(Number(data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink"><div className="card">
+                            <div className="card-body" id="card">
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-9<p id="paytext">👈 Click to pay</p></p>
+                                <p id="subtitle">Covers from {checkin[0]}. 9. {Number(checkin[2])}. to {checkin[0]}. 10. {Number(checkin[2])-1}.</p>
+                            </div>
+                            </div></a>)
+                        : null
+                    }
+                                                          
+                    <p id="subtitle3">&nbsp;</p>
+
+                    
+
+                    
                 </>
                 )
             }
@@ -151,9 +251,11 @@ const Content = ({props}) => {
 
     return (
         <div>
+            
             {
                 <Normal />
             }
+
         </div>
     )
 }
