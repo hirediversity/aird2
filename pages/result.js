@@ -121,14 +121,13 @@ const Content = ({props}) => {
     function Normal() {
 
         var checkin = data.체크인.split("-");
-        var fstmonth = Number(checkin[1]) + 1;
-        var checkinD = new Date(checkin[0], checkin[1], checkin[2]);
+        var checkinD = new Date(`${checkin[0]}-${checkin[1]}-${checkin[2]}`);
         var checkout = data.체크아웃.split("-");
-        var checkoutD = new Date(checkout[0], checkout[1], checkout[2]);
-        var interval = checkoutD - checkinD;
-        var day = 1000*60*60*24;
-        var month = day*30;
-        var months = parseInt(interval/month);
+        var checkoutD = new Date(`${checkout[0]}-${checkout[1]}-${checkout[2]}`);
+        // var interval = checkoutD - checkinD;
+        // var day = 1000*60*60*24;
+        // var month = day*30;
+        // var months = parseInt(interval/month);
         var fornov = new Date("2022-12-01");
         var foroct = new Date("2022-11-01");
         var forsep = new Date("2022-10-01");
@@ -177,7 +176,7 @@ const Content = ({props}) => {
 
                     {/* 11월 월세 */}
                     {
-                        checkinD < fornov && checkoutD > fornov && Number(checkout[1]) !== 11
+                        checkinD < fornov && fornov < checkoutD && Number(checkout[1]) !== 11
                         ? data.상태.toString().indexOf("22-11") !== -1 || data.상태.toString().indexOf("완납") !== -1
                         ? (<div className="card">
                             <div className="card-body" id="card">
@@ -198,7 +197,7 @@ const Content = ({props}) => {
 
                     {/* 10월 월세 */}
                     {
-                        checkinD < foroct && checkoutD > foroct
+                        checkinD < foroct && foroct < checkoutD
                         ? data.상태.toString().indexOf("22-10") !== -1 || data.상태.toString().indexOf("완납") !== -1
                         ? (<div className="card">
                             <div className="card-body" id="card">
@@ -219,7 +218,7 @@ const Content = ({props}) => {
                
                     {/* 9월 월세 */}
                     {
-                        checkinD < forsep && checkoutD > forsep
+                        checkinD < forsep && forsep < checkoutD
                         ? data.상태.toString().indexOf("22-9") !== -1 || data.상태.toString().indexOf("완납") !== -1
                         ? (<div className="card">
                             <div className="card-body" id="card">
