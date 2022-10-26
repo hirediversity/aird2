@@ -63,10 +63,10 @@ function Body(props) {
     const alert = console.log.bind(console);
     if (props.status == -1) {
         alert('Please check the code once again :)')
-        window.location.assign('/');
+        // window.location.assign('/');
     } else if (props.status == -2) {
         alert('Please input the code :)')
-        window.location.assign('/');
+        // window.location.assign('/');
     } else if (props.status == 200) {
         return (
           <div className="App">
@@ -89,7 +89,7 @@ function Body(props) {
         )
     } else {
         alert('Please check the code once again :)')
-        window.location.assign('/');
+        // window.location.assign('/');
     }
 }
 
@@ -178,17 +178,35 @@ const Content = ({props}) => {
                     {
                         checkinD < fornov && fornov < checkoutD && Number(checkout[1]) !== 11
                         ? data.상태.toString().indexOf("22-11") !== -1 || data.상태.toString().indexOf("완납") !== -1
-                        ? (<div className="card">
-                            <div className="card-body" id="card">
+                        ? (Number(checkin[2]) === 1
+                            ? <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="checked.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-11</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkin[0]}. 11. 30.</p>
+                            </div>
+                            </div>
+                            : <div className="card">
+                                <div className="card-body" id="card">
                                 <img src="checked.png" id="납부아이콘"></img>
                                 <p id="boxtitle">{checkin[0]}-11</p>
                                 <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkin[0]}. 12. {Number(checkin[2])-1}.</p>
                             </div>
                             </div>)
-                        : (<a href={data.월세납부링크} target="_blank" rel="noreferrer" id="cardlink"><div className="card">
-                            <div className="card-body" id="card">
+                        : (Number(checkin[2]) === 1
+                            ? <a href={data.월세납부링크} target="_blank" rel="noreferrer" id="cardlink">
+                                <div className="card">
+                                <div className="card-body" id="card">
                                 <img src="cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-11<p id="paytext">👈 Click to pay</p></p>
+                                <p id="boxtitle">{checkin[0]}-11</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkin[0]}. 11. 30.</p>
+                            </div>
+                            </div></a>
+                            : <a href={data.월세납부링크} target="_blank" rel="noreferrer" id="cardlink">
+                                <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-11</p>
                                 <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkin[0]}. 12. {Number(checkin[2])-1}.</p>
                             </div>
                             </div></a>)
@@ -199,17 +217,35 @@ const Content = ({props}) => {
                     {
                         checkinD < foroct && foroct < checkoutD
                         ? data.상태.toString().indexOf("22-10") !== -1 || data.상태.toString().indexOf("완납") !== -1
-                        ? (<div className="card">
-                            <div className="card-body" id="card">
+                        ? (Number(checkin[2]) === 1
+                            ? <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="checked.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-10</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 10. {Number(checkin[2])}. to {checkin[0]}. 10. 31.</p>
+                            </div>
+                            </div>
+                            : <div className="card">
+                                <div className="card-body" id="card">
                                 <img src="checked.png" id="납부아이콘"></img>
                                 <p id="boxtitle">{checkin[0]}-10</p>
                                 <p id="subtitle">Covers from {checkin[0]}. 10. {Number(checkin[2])}. to {checkin[0]}. 11. {Number(checkin[2])-1}.</p>
                             </div>
                             </div>)
-                        : (<a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세) + "&totalusd=" + Math.ceil(Number(data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink"><div className="card">
-                            <div className="card-body" id="card">
+                        : (Number(checkin[2]) === 1
+                            ? <a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세) + "&totalusd=" + Math.ceil(Number(data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink">
+                                <div className="card">
+                                <div className="card-body" id="card">
                                 <img src="cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-10<p id="paytext">👈 Click to pay</p></p>
+                                <p id="boxtitle">{checkin[0]}-10</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 10. {Number(checkin[2])}. to {checkin[0]}. 10. 31.</p>
+                            </div>
+                            </div></a>
+                            : <a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세) + "&totalusd=" + Math.ceil(Number(data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink">
+                                <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-11</p>
                                 <p id="subtitle">Covers from {checkin[0]}. 10. {Number(checkin[2])}. to {checkin[0]}. 11. {Number(checkin[2])-1}.</p>
                             </div>
                             </div></a>)
@@ -220,17 +256,35 @@ const Content = ({props}) => {
                     {
                         checkinD < forsep && forsep < checkoutD
                         ? data.상태.toString().indexOf("22-9") !== -1 || data.상태.toString().indexOf("완납") !== -1
-                        ? (<div className="card">
-                            <div className="card-body" id="card">
+                        ? (Number(checkin[2]) === 1
+                            ? <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="checked.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-9</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 9. {Number(checkin[2])}. to {checkin[0]}. 9. 30.</p>
+                            </div>
+                            </div>
+                            : <div className="card">
+                                <div className="card-body" id="card">
                                 <img src="checked.png" id="납부아이콘"></img>
                                 <p id="boxtitle">{checkin[0]}-9</p>
                                 <p id="subtitle">Covers from {checkin[0]}. 9. {Number(checkin[2])}. to {checkin[0]}. 10. {Number(checkin[2])-1}.</p>
                             </div>
                             </div>)
-                        : (<a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세) + "&totalusd=" + Math.ceil(Number(data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink"><div className="card">
-                            <div className="card-body" id="card">
+                        : (Number(checkin[2]) === 1
+                            ? <a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세) + "&totalusd=" + Math.ceil(Number(data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink">
+                                <div className="card">
+                                <div className="card-body" id="card">
                                 <img src="cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-9<p id="paytext">👈 Click to pay</p></p>
+                                <p id="boxtitle">{checkin[0]}-9</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 9. {Number(checkin[2])}. to {checkin[0]}. 9. 30.</p>
+                            </div>
+                            </div></a>
+                            : <a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세) + "&totalusd=" + Math.ceil(Number(data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink">
+                                <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-9</p>
                                 <p id="subtitle">Covers from {checkin[0]}. 9. {Number(checkin[2])}. to {checkin[0]}. 10. {Number(checkin[2])-1}.</p>
                             </div>
                             </div></a>)
