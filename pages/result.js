@@ -198,7 +198,7 @@ const Content = ({props}) => {
                                 <div className="card">
                                 <div className="card-body" id="card">
                                 <img src="cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-11</p>
+                                <p id="boxtitle">{checkin[0]}-11<p id="paytext">👈 Click to pay</p></p>
                                 <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkin[0]}. 11. 30.</p>
                             </div>
                             </div></a>
@@ -206,7 +206,7 @@ const Content = ({props}) => {
                                 <div className="card">
                                 <div className="card-body" id="card">
                                 <img src="cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-11</p>
+                                <p id="boxtitle">{checkin[0]}-11<p id="paytext">👈 Click to pay</p></p>
                                 <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkin[0]}. 12. {Number(checkin[2])-1}.</p>
                             </div>
                             </div></a>)
@@ -237,7 +237,7 @@ const Content = ({props}) => {
                                 <div className="card">
                                 <div className="card-body" id="card">
                                 <img src="cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-10</p>
+                                <p id="boxtitle">{checkin[0]}-10<p id="paytext">👈 Click to pay</p></p>
                                 <p id="subtitle">Covers from {checkin[0]}. 10. {Number(checkin[2])}. to {checkin[0]}. 10. 31.</p>
                             </div>
                             </div></a>
@@ -245,7 +245,7 @@ const Content = ({props}) => {
                                 <div className="card">
                                 <div className="card-body" id="card">
                                 <img src="cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-11</p>
+                                <p id="boxtitle">{checkin[0]}-10<p id="paytext">👈 Click to pay</p></p>
                                 <p id="subtitle">Covers from {checkin[0]}. 10. {Number(checkin[2])}. to {checkin[0]}. 11. {Number(checkin[2])-1}.</p>
                             </div>
                             </div></a>)
@@ -276,7 +276,7 @@ const Content = ({props}) => {
                                 <div className="card">
                                 <div className="card-body" id="card">
                                 <img src="cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-9</p>
+                                <p id="boxtitle">{checkin[0]}-9<p id="paytext">👈 Click to pay</p></p>
                                 <p id="subtitle">Covers from {checkin[0]}. 9. {Number(checkin[2])}. to {checkin[0]}. 9. 30.</p>
                             </div>
                             </div></a>
@@ -284,7 +284,7 @@ const Content = ({props}) => {
                                 <div className="card">
                                 <div className="card-body" id="card">
                                 <img src="cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-9</p>
+                                <p id="boxtitle">{checkin[0]}-9<p id="paytext">👈 Click to pay</p></p>
                                 <p id="subtitle">Covers from {checkin[0]}. 9. {Number(checkin[2])}. to {checkin[0]}. 10. {Number(checkin[2])-1}.</p>
                             </div>
                             </div></a>)
