@@ -29,7 +29,7 @@ export async function getServerSideProps(props) {
       return { props: {status: 999, data: {}} }
     }
 
-    //pageProps로 넘길 데이터
+    //pageProps로 넘길 데이ㅏ터
     return { props: { status: res.status, data: data } }
     }
 }
