@@ -24,7 +24,7 @@ export async function getServerSideProps(props) {
     const data = await res.json();
     
 
-    // data 없을 땐 리턴값을 달리함
+    // data 없을 땐 리턴값을 달리함d
      if (!data) {
       return { props: {status: 999, data: {}} }
     }
