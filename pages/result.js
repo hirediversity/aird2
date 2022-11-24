@@ -63,10 +63,10 @@ function Body(props) {
     const alert = console.log.bind(console);
     if (props.status == -1) {
         alert('Please check the code once again :)')
-        window.location.assign('/');
+        // window.location.assign('/');
     } else if (props.status == -2) {
         alert('Please input the code :)')
-        window.location.assign('/');
+        // window.location.assign('/');
     } else if (props.status == 200) {
         return (
           <div className="App">
@@ -89,7 +89,7 @@ function Body(props) {
         )
     } else {
         alert('Please check the code once again :)')
-        window.location.assign('/');
+        // window.location.assign('/');
     }
 }
 
