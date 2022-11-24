@@ -128,6 +128,7 @@ const Content = ({props}) => {
         // var day = 1000*60*60*24;
         // var month = day*30;
         // var months = parseInt(interval/month);
+        var fordec = new Date("2023-01-01");
         var fornov = new Date("2022-12-01");
         var foroct = new Date("2022-11-01");
         var forsep = new Date("2022-10-01");
@@ -140,13 +141,13 @@ const Content = ({props}) => {
                 <p id="subtitle2">From the contents below, you can check the status of your <b>monthly rent and utility</b>.</p>
                 <p id="subtitle2">&nbsp;</p>
                 <p id="title">Utility Fee</p>
-                <p id='subtitle2'>Check your maintenance fee that <b>used in September</b>.</p>
+                <p id='subtitle2'>Check your maintenance fee that <b>used in October</b>.</p>
 
 
-                <p id="title3">🙋‍♀️ Total amount for September</p>
+                <p id="title3">🙋‍♀️ Total amount for October</p>
                 <p id="subtitle">The amount you have to pay is <b>{data.관리비안내용}KRW</b>,<br/>
                 You can pay it through the button below!</p>
-                <p id="subtitle">Payment due : <b>2022. 11. 01</b></p>
+                <p id="subtitle">Payment due : <b>2022. 11. 30</b></p>
 
                 <a href={data.관리비링크} target="_blank" rel="noreferrer">
                 <button type="button" className="btn btn-primary btn-sm" id="searchBtn">Click here to pay the utilty 💸</button></a>
@@ -168,15 +169,80 @@ const Content = ({props}) => {
                 <p id="subtitle">{`If you don't have an access of your APP account, please click the button below!`}</p>
 
                 <a href='https://form.jotform.com/221941752449057' target="_blank" rel="noreferrer">
-                <button type="button" className="btn btn-primary btn-sm" id="searchBtn">Submit information to make the APP account</button></a>
+                <button type="button" className="btn btn-primary btn-sm" id="searchBtn">Submit information to make an APP account</button></a>
                 <p id="subtitle3">&nbsp;</p>
                 <p id="subtitle2">&nbsp;</p>
                 <p id="title">Monthly Rent</p>
-                <p id="subtitle2">The last three months are displayed below,<br/>each status will be changed within a week after pay!</p>
+                <p id="subtitle2">Maximum three months are displayed below,<br/>each status will be changed within a week after pay!</p>
+
+                    {/* 12월 월세 */}
+                    {
+                        checkinD < fordec && fordec < checkoutD && Number(checkout[1]) !== 12 && Date(`2023-01-${Number(checkin[2])-1}`) < checkoutD
+                        ? data.상태.toString().indexOf("22-12") !== -1 || data.상태.toString().indexOf("완납") !== -1
+                        ? (Number(checkin[2]) === 1
+                            ? <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="checked.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-12</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to {checkin[0]}. 12. 31.</p>
+                            </div>
+                            </div>
+                            : <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="checked.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-12</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to 2023. 01. {Number(checkin[2])-1}.</p>
+                            </div>
+                            </div>)
+                        : (Number(checkin[2]) === 1
+                            ? <a href={data.월세납부링크} target="_blank" rel="noreferrer" id="cardlink">
+                                <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-12<p id="paytext">👈 Click to pay</p></p>
+                                <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to {checkin[0]}. 12. 31.</p>
+                            </div>
+                            </div></a>
+                            : <a href={data.월세납부링크} target="_blank" rel="noreferrer" id="cardlink">
+                                <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-12<p id="paytext">👈 Click to pay</p></p>
+                                <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to 2023. 01. {Number(checkin[2])-1}.</p>
+                            </div>
+                            </div></a>)
+                        : checkinD < fordec && fordec < checkoutD && Number(checkout[1]) !== 12
+                        ? data.상태.toString().indexOf("22-12") !== -1 || data.상태.toString().indexOf("완납") !== -1
+                        ? <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="checked.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-12</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to {checkout[0]}. {checkout[1]}. {checkout[2]}.</p>
+                            </div>
+                            </div>
+                        : data.월세잔금 - data.월세 > 0
+                        ? <a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세잔금 - data.월세) + "&totalusd=" + Math.ceil(Number(data.월세잔금 - data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink">
+                                <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-12<p id="paytext">👈 Click to pay</p></p>
+                                <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to {checkout[0]}. {checkout[1]}. {checkout[2]}.</p>
+                            </div>
+                            </div></a>
+                        : <a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세잔금) + "&totalusd=" + Math.ceil(Number(data.월세잔금)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink">
+                                <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-12<p id="paytext">👈 Click to pay</p></p>
+                                <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to {checkout[0]}. {checkout[1]}. {checkout[2]}.</p>
+                            </div>
+                            </div></a>
+                        : null
+                    }
 
                     {/* 11월 월세 */}
                     {
-                        checkinD < fornov && fornov < checkoutD && Number(checkout[1]) !== 11
+                        checkinD < fornov && fornov < checkoutD && Number(checkout[1]) !== 11 && Date(`2022-12-${Number(checkin[2])-1}`) < checkoutD
                         ? data.상태.toString().indexOf("22-11") !== -1 || data.상태.toString().indexOf("완납") !== -1
                         ? (Number(checkin[2]) === 1
                             ? <div className="card">
@@ -190,7 +256,7 @@ const Content = ({props}) => {
                                 <div className="card-body" id="card">
                                 <img src="checked.png" id="납부아이콘"></img>
                                 <p id="boxtitle">{checkin[0]}-11</p>
-                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkin[0]}. 12. {Number(checkin[2])-1}.</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to 2022. 12. {Number(checkin[2])-1}.</p>
                             </div>
                             </div>)
                         : (Number(checkin[2]) === 1
@@ -207,9 +273,35 @@ const Content = ({props}) => {
                                 <div className="card-body" id="card">
                                 <img src="cancel.png" id="납부아이콘"></img>
                                 <p id="boxtitle">{checkin[0]}-11<p id="paytext">👈 Click to pay</p></p>
-                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkin[0]}. 12. {Number(checkin[2])-1}.</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to 2022. 12. {Number(checkin[2])-1}.</p>
                             </div>
                             </div></a>)
+                        : checkinD < fornov && fornov < checkoutD && Number(checkout[1]) !== 11
+                        ? data.상태.toString().indexOf("22-11") !== -1 || data.상태.toString().indexOf("완납") !== -1
+                        ? <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="checked.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-11</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkout[0]}. {checkout[1]}. {checkout[2]}.</p>
+                            </div>
+                            </div>
+                        : data.월세잔금 - data.월세 > 0
+                        ? <a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세잔금 - data.월세) + "&totalusd=" + Math.ceil(Number(data.월세잔금 - data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink">
+                                <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-11<p id="paytext">👈 Click to pay</p></p>
+                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkout[0]}. {checkout[1]}. {checkout[2]}.</p>
+                            </div>
+                            </div></a>
+                        : <a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세잔금) + "&totalusd=" + Math.ceil(Number(data.월세잔금)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink">
+                                <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-11<p id="paytext">👈 Click to pay</p></p>
+                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkout[0]}. {checkout[1]}. {checkout[2]}.</p>
+                            </div>
+                            </div></a>
                         : null
                     }
 
@@ -253,7 +345,7 @@ const Content = ({props}) => {
                     }
                
                     {/* 9월 월세 */}
-                    {
+                    {/* {
                         checkinD < forsep && forsep < checkoutD
                         ? data.상태.toString().indexOf("22-9") !== -1 || data.상태.toString().indexOf("완납") !== -1
                         ? (Number(checkin[2]) === 1
@@ -289,7 +381,7 @@ const Content = ({props}) => {
                             </div>
                             </div></a>)
                         : null
-                    }
+                    } */}
                                                           
                     <p id="subtitle3">&nbsp;</p>
 
