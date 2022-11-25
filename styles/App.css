@@ -8,7 +8,7 @@ html {
   width: inherit;
   padding: 0 5% 0 5%;
   text-align: center;
-  margin-top: 100px;
+  margin-top: 80px;
   font-family: 'Noto sans KR', sans-serif;
   word-wrap: break-word;
   overflow: hidden;
@@ -363,4 +363,10 @@ input::placeholder {
 #cardlink {
   text-decoration: none;
   color: black;
+}
+
+#배너 {
+  margin-top: 50px;
+  width: 100%;
+  margin-bottom: 80px;
 }
