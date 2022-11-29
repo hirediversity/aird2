@@ -78,7 +78,7 @@ function Body(props) {
                 <Content props={props}/>
             </div>
 
-            <a href="https://instagram.com/stories/aird_korea/2979115628675712260?igshid=MDM4ZDc5MmU="><img id="배너" src="https://github.com/hirediversity/app/blob/main/%E1%84%87%E1%85%A2%E1%84%82%E1%85%A5.png?raw=true"></img></a>
+//             <a href="https://instagram.com/stories/aird_korea/2979115628675712260?igshid=MDM4ZDc5MmU="><img id="배너" src="https://github.com/hirediversity/app/blob/main/%E1%84%87%E1%85%A2%E1%84%82%E1%85%A5.png?raw=true"></img></a>
             <a href="https://www.jotform.com/app/221943338469465">
                 <button type="button" className="btn btn-primary btn-sm" id="searchBtn2">Back to Main</button>
             </a>
