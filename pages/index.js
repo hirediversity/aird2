@@ -47,16 +47,19 @@ function Body() {
         <div id="wrapper">
             <a href="https://www.jotform.com/app/221943338469465"><img id="hirelogo" src='/aird1@300x-8 - 복사본.png'/></a></div>
             <p id="title">Utility Fee</p>
-            <p id='subtitle'>Check your maintenance fee that <b>used in October</b>.</p><br/>
-            <p id='subtitle'>The amount might be different from the paper bill or APP,<br/>
-            ignore that bill because it includes rent fee and the usage of whole month regardless your exact contract.</p>
+            <p id='subtitle'>Check your bill that <b>used in November</b>.</p>
+            {/* <br/> */}
+            {/* <p id='subtitle'>The amount might be different from the paper bill or APP,<br/>
+            ignore that bill because it includes rent fee and the usage of whole month regardless your exact contract.</p> */}
             
 
             <input id="rcNumber" onChange={onChange} value={pw} placeholder=" type the code you've got from the email (starts with 'rec')"></input>
             <Link
             href={{
-              pathname: `/result/` + pw
+              pathname: `/result`,
+              query: {rec_id: pw}
             }}
+            as={`/result`}
             >
               <button type="button" className="btn btn-primary btn-sm" id="searchBtn">Login</button>
           </Link>
