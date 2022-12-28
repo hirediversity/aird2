@@ -56,10 +56,8 @@ function Body() {
             <input id="rcNumber" onChange={onChange} value={pw} placeholder=" type the code you've got from the email (starts with 'rec')"></input>
             <Link
             href={{
-              pathname: `/result`,
-              query: {rec_id: pw}
+              pathname: `/result/${pw}`
             }}
-            as={`/result`}
             >
               <button type="button" className="btn btn-primary btn-sm" id="searchBtn">Login</button>
           </Link>

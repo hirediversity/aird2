@@ -5,7 +5,7 @@ import Link from "next/link"
 
 
 export async function getServerSideProps(props) {
-  var rec_id = props.query.rec_id
+  var rec_id = props.params.pw
 
   if (typeof rec_id == "undefined") {
     return ({props: { status: -1, data: {} }})
