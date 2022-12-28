@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image"
 import Link from "next/link"
-import fetch from 'node-fetch'
 
 
-export async function getServerSideProps(context) {
-    const rec_id = context.params.pw
 
-    if (typeof rec_id == "undefined") {
-        return ({props: { status: -1, data: {} }})
-    } else if (rec_id == "") {
-        return ({props: { status: -2, data: {} }})
-    } else {
-        var url = process.env.AIRTABLE_API_URL + rec_id
-        const res = await fetch(url, { 
-            method: "get", 
-            headers: new Headers({
-            "Authorization": "Bearer " + process.env.AIRTABLE_API_KEY,
-            "Content-Type": "application/json"
-        })
+export async function getServerSideProps(props) {
+  var rec_id = props.query.rec_id
+
+  if (typeof rec_id == "undefined") {
+    return ({props: { status: -1, data: {} }})
+  } else if (rec_id == "") {
+    return ({props: { status: -2, data: {} }})
+  } else {
+    var url = process.env.AIRTABLE_API_URL + rec_id
+    const res = await fetch(url, { 
+      method: "get", 
+      headers: new Headers({
+        "Authorization": "Bearer " + process.env.AIRTABLE_API_KEY,
+        "Content-Type": "application/json"
+      })
     });
 
     const data = await res.json();
+    
 
     // data 없을 땐 리턴값을 달리함
      if (!data) {
@@ -44,7 +45,7 @@ function Header() {
         name="description"
         content="Web site created using create-react-app"
       />
-      <link rel="apple-touch-icon" href="../자산 4@300x-8.png" />
+      <link rel="apple-touch-icon" href="/자산 4@300x-8.png" />
       <link rel="manifest" href=".//manifest.json" />
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
 
@@ -62,15 +63,15 @@ function Body(props) {
     const alert = console.log.bind(console);
     if (props.status == -1) {
         alert('Please check the code once again :)')
-        window.location.assign('/');
+        // window.location.assign('/');
     } else if (props.status == -2) {
         alert('Please input the code :)')
-        window.location.assign('/');
+        // window.location.assign('/');
     } else if (props.status == 200) {
         return (
           <div className="App">
             <div id="wrapper">
-            <a href="https://www.jotform.com/app/221943338469465"><img id="hirelogo" src='../aird1@300x-8 - 복사본.png'/></a></div>
+            <a href="https://www.jotform.com/app/221943338469465"><img id="hirelogo" src='/aird1@300x-8 - 복사본.png'/></a></div>
             
 
 
@@ -87,7 +88,7 @@ function Body(props) {
         )
     } else {
         alert('Please check the code once again :)')
-        window.location.assign('/');
+        // window.location.assign('/');
     }
 }
 
@@ -130,6 +131,7 @@ const Content = ({props}) => {
         var fornov = new Date("2022-12-01");
         var foroct = new Date("2022-11-01");
         var forsep = new Date("2022-10-01");
+        var forjan = new Date("2023-02-01");
 
 
 
@@ -139,13 +141,13 @@ const Content = ({props}) => {
                 <p id="subtitle2">From the contents below, you can check the status of your <b>monthly rent and utility</b>.</p>
                 <p id="subtitle2">&nbsp;</p>
                 <p id="title">Utility Fee</p>
-                <p id='subtitle2'>Check your maintenance fee that <b>used in October</b>.</p>
+                <p id='subtitle2'>Check your maintenance fee that <b>used in November</b>.</p>
 
 
-                <p id="title3">🙋‍♀️ Total amount for October</p>
+                <p id="title3">🙋‍♀️ Total amount for November</p>
                 <p id="subtitle">The amount you have to pay is <b>{data.관리비안내용}KRW</b>,<br/>
                 You can pay it through the button below!</p>
-                <p id="subtitle">Payment due : <b>2022. 11. 30</b></p>
+                <p id="subtitle">Payment due : <b>2023. 01. 02</b></p>
 
                 <a href={data.관리비링크} target="_blank" rel="noreferrer">
                 <button type="button" className="btn btn-primary btn-sm" id="searchBtn">Click here to pay the utilty 💸</button></a>
@@ -173,174 +175,125 @@ const Content = ({props}) => {
                 <p id="title">Monthly Rent</p>
                 <p id="subtitle2">Maximum three months are displayed below,<br/>each status will be changed within a week after pay!</p>
 
+                    {/* 1월 월세 */}
+                    {
+                        checkinD < forjan && forjan < checkoutD
+                        ? data.상태.toString().indexOf("23-1") !== -1 || data.상태.toString().indexOf("완납") !== -1
+                        ? (Number(checkin[2]) === 1
+                            ? <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="checked.png" id="납부아이콘"></img>
+                                <p id="boxtitle">2023-01</p>
+                                <p id="subtitle">Payment due: 2023. 01. {Number(checkin[2])}</p>
+                            </div>
+                            </div>
+                            : <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="checked.png" id="납부아이콘"></img>
+                                <p id="boxtitle">2023-01</p>
+                                <p id="subtitle">Payment due: 2023. 01. {Number(checkin[2])}.</p>
+                            </div>
+                            </div>)
+                        : (Number(checkin[2]) === 1
+                            ? <a href={data.월세납부링크} target="_blank" rel="noreferrer" id="cardlink">
+                                <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">2023-01<p id="paytext">👈 Click to pay</p></p>
+                                <p id="subtitle">Payment due: 2023. 01. {Number(checkin[2])}</p>
+                            </div>
+                            </div></a>
+                            : <a href={data.월세납부링크} target="_blank" rel="noreferrer" id="cardlink">
+                                <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">2023-01<p id="paytext">👈 Click to pay</p></p>
+                                <p id="subtitle">Payment due: 2023. 01. {Number(checkin[2])}</p>
+                            </div>
+                            </div></a>)
+                        : null
+                    }
+
+
                     {/* 12월 월세 */}
                     {
-                        checkinD < fordec && fordec < checkoutD && Number(checkout[1]) !== 12 && Date(`2023-01-${Number(checkin[2])-1}`) < checkoutD
+                        checkinD < fordec && fordec < checkoutD
                         ? data.상태.toString().indexOf("22-12") !== -1 || data.상태.toString().indexOf("완납") !== -1
                         ? (Number(checkin[2]) === 1
                             ? <div className="card">
                                 <div className="card-body" id="card">
-                                <img src="../checked.png" id="납부아이콘"></img>
+                                <img src="checked.png" id="납부아이콘"></img>
                                 <p id="boxtitle">{checkin[0]}-12</p>
-                                <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to {checkin[0]}. 12. 31.</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to 2022. 12. 31.</p>
                             </div>
                             </div>
                             : <div className="card">
                                 <div className="card-body" id="card">
-                                <img src="../checked.png" id="납부아이콘"></img>
+                                <img src="checked.png" id="납부아이콘"></img>
                                 <p id="boxtitle">{checkin[0]}-12</p>
                                 <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to 2023. 01. {Number(checkin[2])-1}.</p>
-                            </div>
-                            </div>)
-                        : (Number(checkin[2]) === 1
-                            ? <a href={data.월세납부링크} target="_blank" rel="noreferrer" id="cardlink">
-                                <div className="card">
-                                <div className="card-body" id="card">
-                                <img src="../cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-12<p id="paytext">👈 Click to pay</p></p>
-                                <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to {checkin[0]}. 12. 31.</p>
-                            </div>
-                            </div></a>
-                            : <a href={data.월세납부링크} target="_blank" rel="noreferrer" id="cardlink">
-                                <div className="card">
-                                <div className="card-body" id="card">
-                                <img src="../cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-12<p id="paytext">👈 Click to pay</p></p>
-                                <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to 2023. 01. {Number(checkin[2])-1}.</p>
-                            </div>
-                            </div></a>)
-                        : checkinD < fordec && fordec < checkoutD && Number(checkout[1]) !== 12
-                        ? data.상태.toString().indexOf("22-12") !== -1 || data.상태.toString().indexOf("완납") !== -1
-                        ? <div className="card">
-                                <div className="card-body" id="card">
-                                <img src="../checked.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-12</p>
-                                <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to {checkout[0]}. {checkout[1]}. {checkout[2]}.</p>
-                            </div>
-                            </div>
-                        : data.월세잔금 - data.월세 > 0
-                        ? <a href={data.월세납부링크} target="_blank" rel="noreferrer" id="cardlink">
-                                <div className="card">
-                                <div className="card-body" id="card">
-                                <img src="../cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-12<p id="paytext">👈 Click to pay</p></p>
-                                <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to {checkout[0]}. {checkout[1]}. {checkout[2]}.</p>
-                            </div>
-                            </div></a>
-                        : <a href={data.월세납부링크} target="_blank" rel="noreferrer" id="cardlink">
-                                <div className="card">
-                                <div className="card-body" id="card">
-                                <img src="../cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-12<p id="paytext">👈 Click to pay</p></p>
-                                <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to {checkout[0]}. {checkout[1]}. {checkout[2]}.</p>
-                            </div>
-                            </div></a>
-                        : null
-                    }
-
-                    {/* 11월 월세 */}
-                    {
-                        checkinD < fornov && fornov < checkoutD && Number(checkout[1]) !== 11 && Date(`2022-12-${Number(checkin[2])-1}`) < checkoutD
-                        ? data.상태.toString().indexOf("22-11") !== -1 || data.상태.toString().indexOf("완납") !== -1
-                        ? (Number(checkin[2]) === 1
-                            ? <div className="card">
-                                <div className="card-body" id="card">
-                                <img src="../checked.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-11</p>
-                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkin[0]}. 11. 30.</p>
-                            </div>
-                            </div>
-                            : <div className="card">
-                                <div className="card-body" id="card">
-                                <img src="../checked.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-11</p>
-                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to 2022. 12. {Number(checkin[2])-1}.</p>
-                            </div>
-                            </div>)
-                        : (Number(checkin[2]) === 1
-                            ? <a href={data.월세납부링크} target="_blank" rel="noreferrer" id="cardlink">
-                                <div className="card">
-                                <div className="card-body" id="card">
-                                <img src="../cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-11<p id="paytext">👈 Click to pay</p></p>
-                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkin[0]}. 11. 30.</p>
-                            </div>
-                            </div></a>
-                            : <a href={data.월세납부링크} target="_blank" rel="noreferrer" id="cardlink">
-                                <div className="card">
-                                <div className="card-body" id="card">
-                                <img src="../cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-11<p id="paytext">👈 Click to pay</p></p>
-                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to 2022. 12. {Number(checkin[2])-1}.</p>
-                            </div>
-                            </div></a>)
-                        : checkinD < fornov && fornov < checkoutD && Number(checkout[1]) !== 11
-                        ? data.상태.toString().indexOf("22-11") !== -1 || data.상태.toString().indexOf("완납") !== -1
-                        ? <div className="card">
-                                <div className="card-body" id="card">
-                                <img src="../checked.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-11</p>
-                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkout[0]}. {checkout[1]}. {checkout[2]}.</p>
-                            </div>
-                            </div>
-                        : data.월세잔금 - data.월세 > 0
-                        ? <a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세잔금 - data.월세) + "&totalusd=" + Math.ceil(Number(data.월세잔금 - data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink">
-                                <div className="card">
-                                <div className="card-body" id="card">
-                                <img src="../cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-11<p id="paytext">👈 Click to pay</p></p>
-                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkout[0]}. {checkout[1]}. {checkout[2]}.</p>
-                            </div>
-                            </div></a>
-                        : <a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세잔금) + "&totalusd=" + Math.ceil(Number(data.월세잔금)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink">
-                                <div className="card">
-                                <div className="card-body" id="card">
-                                <img src="../cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-11<p id="paytext">👈 Click to pay</p></p>
-                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkout[0]}. {checkout[1]}. {checkout[2]}.</p>
-                            </div>
-                            </div></a>
-                        : null
-                    }
-
-                    {/* 10월 월세 */}
-                    {
-                        checkinD < foroct && foroct < checkoutD
-                        ? data.상태.toString().indexOf("22-10") !== -1 || data.상태.toString().indexOf("완납") !== -1
-                        ? (Number(checkin[2]) === 1
-                            ? <div className="card">
-                                <div className="card-body" id="card">
-                                <img src="../checked.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-10</p>
-                                <p id="subtitle">Covers from {checkin[0]}. 10. {Number(checkin[2])}. to {checkin[0]}. 10. 31.</p>
-                            </div>
-                            </div>
-                            : <div className="card">
-                                <div className="card-body" id="card">
-                                <img src="../checked.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-10</p>
-                                <p id="subtitle">Covers from {checkin[0]}. 10. {Number(checkin[2])}. to {checkin[0]}. 11. {Number(checkin[2])-1}.</p>
                             </div>
                             </div>)
                         : (Number(checkin[2]) === 1
                             ? <a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세) + "&totalusd=" + Math.ceil(Number(data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink">
                                 <div className="card">
                                 <div className="card-body" id="card">
-                                <img src="../cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-10<p id="paytext">👈 Click to pay</p></p>
-                                <p id="subtitle">Covers from {checkin[0]}. 10. {Number(checkin[2])}. to {checkin[0]}. 10. 31.</p>
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-12<p id="paytext">👈 Click to pay</p></p>
+                                <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to 2022. 12. 31.</p>
                             </div>
                             </div></a>
                             : <a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세) + "&totalusd=" + Math.ceil(Number(data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink">
                                 <div className="card">
                                 <div className="card-body" id="card">
-                                <img src="../cancel.png" id="납부아이콘"></img>
-                                <p id="boxtitle">{checkin[0]}-10<p id="paytext">👈 Click to pay</p></p>
-                                <p id="subtitle">Covers from {checkin[0]}. 10. {Number(checkin[2])}. to {checkin[0]}. 11. {Number(checkin[2])-1}.</p>
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-12<p id="paytext">👈 Click to pay</p></p>
+                                <p id="subtitle">Covers from {checkin[0]}. 12. {Number(checkin[2])}. to 2023. 01. {Number(checkin[2])-1}.</p>
                             </div>
                             </div></a>)
                         : null
                     }
+
+                    {/* 11월 월세 */}
+                    {
+                        checkinD < fornov && fornov < checkoutD
+                        ? data.상태.toString().indexOf("22-11") !== -1 || data.상태.toString().indexOf("완납") !== -1
+                        ? (Number(checkin[2]) === 1
+                            ? <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="checked.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-11</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkin[0]}. 11. 30.</p>
+                            </div>
+                            </div>
+                            : <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="checked.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-11</p>
+                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkin[0]}. 12. {Number(checkin[2])}.</p>
+                            </div>
+                            </div>)
+                        : (Number(checkin[2]) === 1
+                            ? <a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세) + "&totalusd=" + Math.ceil(Number(data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink">
+                                <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-11<p id="paytext">👈 Click to pay</p></p>
+                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkin[0]}. 11. 30.</p>
+                            </div>
+                            </div></a>
+                            : <a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세) + "&totalusd=" + Math.ceil(Number(data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink">
+                                <div className="card">
+                                <div className="card-body" id="card">
+                                <img src="cancel.png" id="납부아이콘"></img>
+                                <p id="boxtitle">{checkin[0]}-11<p id="paytext">👈 Click to pay</p></p>
+                                <p id="subtitle">Covers from {checkin[0]}. 11. {Number(checkin[2])}. to {checkin[0]}. 12. {Number(checkin[2])}.</p>
+                            </div>
+                            </div></a>)
+                        : null
+                    }
+
+
                
                     {/* 9월 월세 */}
                     {/* {
@@ -349,14 +302,14 @@ const Content = ({props}) => {
                         ? (Number(checkin[2]) === 1
                             ? <div className="card">
                                 <div className="card-body" id="card">
-                                <img src="../checked.png" id="납부아이콘"></img>
+                                <img src="checked.png" id="납부아이콘"></img>
                                 <p id="boxtitle">{checkin[0]}-9</p>
                                 <p id="subtitle">Covers from {checkin[0]}. 9. {Number(checkin[2])}. to {checkin[0]}. 9. 30.</p>
                             </div>
                             </div>
                             : <div className="card">
                                 <div className="card-body" id="card">
-                                <img src="../checked.png" id="납부아이콘"></img>
+                                <img src="checked.png" id="납부아이콘"></img>
                                 <p id="boxtitle">{checkin[0]}-9</p>
                                 <p id="subtitle">Covers from {checkin[0]}. 9. {Number(checkin[2])}. to {checkin[0]}. 10. {Number(checkin[2])-1}.</p>
                             </div>
@@ -365,7 +318,7 @@ const Content = ({props}) => {
                             ? <a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세) + "&totalusd=" + Math.ceil(Number(data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink">
                                 <div className="card">
                                 <div className="card-body" id="card">
-                                <img src="../cancel.png" id="납부아이콘"></img>
+                                <img src="cancel.png" id="납부아이콘"></img>
                                 <p id="boxtitle">{checkin[0]}-9<p id="paytext">👈 Click to pay</p></p>
                                 <p id="subtitle">Covers from {checkin[0]}. 9. {Number(checkin[2])}. to {checkin[0]}. 9. 30.</p>
                             </div>
@@ -373,7 +326,7 @@ const Content = ({props}) => {
                             : <a href={"https://form.jotform.com/221793411877463/prefill/62dfa450314c5c71c82884c3eb7d&email=" + data.이메일 + "&totalkrw=" + Number(data.월세) + "&totalusd=" + Math.ceil(Number(data.월세)/1180*1.1)} target="_blank" rel="noreferrer" id="cardlink">
                                 <div className="card">
                                 <div className="card-body" id="card">
-                                <img src="../cancel.png" id="납부아이콘"></img>
+                                <img src="cancel.png" id="납부아이콘"></img>
                                 <p id="boxtitle">{checkin[0]}-9<p id="paytext">👈 Click to pay</p></p>
                                 <p id="subtitle">Covers from {checkin[0]}. 9. {Number(checkin[2])}. to {checkin[0]}. 10. {Number(checkin[2])-1}.</p>
                             </div>
